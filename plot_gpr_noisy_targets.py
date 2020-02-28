@@ -41,8 +41,9 @@ def f(x):
 # ----------------------------------------------------------------------
 #  First the noiseless case
 X = np.atleast_2d([1., 3., 5., 6., 7., 8.]).T
+print('X',X)
 
-# Observations
+# Observations points
 y = f(X).ravel()
 
 # Mesh the input space for evaluations of the real function, the prediction and
@@ -69,8 +70,8 @@ plt.fill(np.concatenate([x, x[::-1]]),
          np.concatenate([y_pred - 1.9600 * sigma,
                         (y_pred + 1.9600 * sigma)[::-1]]),
          alpha=.5, fc='b', ec='None', label='95% confidence interval')
-plt.xlabel('$x$')
-plt.ylabel('$f(x)$')
+plt.xlabel('x')
+plt.ylabel('f(x)')
 plt.ylim(-10, 20)
 plt.legend(loc='upper left')
 
