@@ -1,42 +1,35 @@
-"""
-=========================================================
-Gaussian Processes regression: basic introductory example
-=========================================================
-
-A simple one-dimensional regression example computed in two different ways:
-
-1. A noise-free case
-2. A noisy case with known noise-level per datapoint
-
-In both cases, the kernel's parameters are estimated using the maximum
-likelihood principle.
-
-The figures illustrate the interpolating property of the Gaussian Process
-model as well as its probabilistic nature in the form of a pointwise 95%
-confidence interval.
-
-Note that the parameter ``alpha`` is applied as a Tikhonov
-regularization of the assumed covariance between the training points.
-"""
-print(__doc__)
-
-# Author: Vincent Dubourg <vincent.dubourg@gmail.com>
-#         Jake Vanderplas <vanderplas@astro.washington.edu>
-#         Jan Hendrik Metzen <jhm@informatik.uni-bremen.de>s
-# License: BSD 3 clause
-
 import numpy as np
 from matplotlib import pyplot as plt
 
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import RBF, ConstantKernel as C
 
+
+#-------------------------------------
+# Windfield
+
+x1,y1 = np.meshgrid(np.arange(-2, 2, .25), np.arange(-2, 2, .25))
+
+vx = x1 - y1
+vy = y1 + x1
+
+fig, ax = plt.subplots()
+
+q = ax.quiver(x1, y1, vx, vy)
+
+
+
+
 np.random.seed(1)
 
 
 def f(x):
     """The function to predict."""
+
+
     return x * np.sin(x)
+
+
 
 # ----------------------------------------------------------------------
 #  First the noiseless case
