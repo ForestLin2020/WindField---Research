@@ -5,27 +5,10 @@ from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import RBF, ConstantKernel as C
 
 
-#-------------------------------------
-# Windfield
-
-x1,y1 = np.meshgrid(np.arange(-2, 2, .25), np.arange(-2, 2, .25))
-
-vx = x1 - y1
-vy = y1 + x1
-
-fig, ax = plt.subplots()
-
-q = ax.quiver(x1, y1, vx, vy)
-
-
-
-
-np.random.seed(1)
 
 
 def f(x):
     """The function to predict."""
-
 
     return x * np.sin(x)
 
@@ -36,12 +19,19 @@ def f(x):
 X = np.atleast_2d([1., 3., 5., 6., 7., 8.]).T
 print('X',X)
 
+x1, y1 = np.meshgrid(np.arange(-2, 2, .5), np.arange(-2, 2, .5))
+vx = x1 - y1
+vy = y1 + x1
+
 # Observations points
+# y = vy
 y = f(X).ravel()
 
 # Mesh the input space for evaluations of the real function, the prediction and
 # its MSE
+# x = vx
 x = np.atleast_2d(np.linspace(0, 10, 1000)).T
+
 
 # Instantiate a Gaussian Process model
 kernel = C(1.0, (1e-3, 1e3)) * RBF(10, (1e-2, 1e2))
@@ -55,7 +45,7 @@ y_pred, sigma = gp.predict(x, return_std=True)
 
 # Plot the function, the prediction and the 95% confidence interval based on
 # the MSE
-plt.figure()
+plt.figure('noiseless case')
 plt.plot(x, f(x), 'r:', label=r'$f(x) = x\,\sin(x)$')
 plt.plot(X, y, 'r.', markersize=10, label='Observations')
 plt.plot(x, y_pred, 'b-', label='Prediction')
@@ -91,7 +81,7 @@ y_pred, sigma = gp.predict(x, return_std=True)
 
 # Plot the function, the prediction and the 95% confidence interval based on
 # the MSE
-plt.figure()
+plt.figure('noisy case')
 plt.plot(x, f(x), 'r:', label=r'$f(x) = x\,\sin(x)$')
 plt.errorbar(X.ravel(), y, dy, fmt='r.', markersize=10, label='Observations')
 plt.plot(x, y_pred, 'b-', label='Prediction')
