@@ -6,14 +6,18 @@ from matplotlib import cm
 from matplotlib.ticker import LinearLocator, FormatStrFormatter
 import numpy as np
 
-
-
-
 # Make data.
-X = np.arange(-5, 5, 0.25)
-Y = np.arange(-5, 5, 0.25)
+# X = np.arange(-5, 5, 0.25)
+# Y = np.arange(-5, 5, 0.25)
+# X, Y = np.meshgrid(X, Y)
 
-X, Y = np.meshgrid(X, Y)
+
+X, Y = np.meshgrid(np.arange(-5, 5, 0.25), np.arange(-5, 5, 0.25))
+
+
+
+print('X',X)
+print('Y',Y)
 R = np.sqrt(X**2 + Y**2)
 Z = np.cos(R)
 # Z = (X - Y) / 5
